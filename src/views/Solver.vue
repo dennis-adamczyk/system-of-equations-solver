@@ -23,9 +23,15 @@ export default {
   computed: {
     solution() {
       try {
-        const solutions = nerdamer.solveEquations(
-          this.equations.filter(Boolean)
-        );
+        const equations = this.equations.filter(Boolean);
+        let solutions = nerdamer.solveEquations(equations);
+
+        if (
+          equations.length <= 1 &&
+          solutions.some((solution) => !Array.isArray(solution))
+        ) {
+          solutions = [solutions];
+        }
         console.log(solutions);
         return (
           solutions
